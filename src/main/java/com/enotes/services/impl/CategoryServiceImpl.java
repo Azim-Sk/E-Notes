@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		//check existing category
 		
-		Boolean exist = repo.existByName(categoryDto.getName().trim());
+		Boolean exist = repo.existsByName(categoryDto.getName().trim());
 		
 		Category category = mapper.map(categoryDto, Category.class);
 
