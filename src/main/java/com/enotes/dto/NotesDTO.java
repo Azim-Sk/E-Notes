@@ -17,13 +17,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NotesDTO {
-	
+
 	private Integer id;
 	private String title;
 	private String description;
 
 	private CategoryDTO categoryDTO;
-	
+
 	private Integer createdBy;
 
 	private Date createdOn;
@@ -32,12 +32,26 @@ public class NotesDTO {
 
 	private Date updatedOn;
 
+	private FileDTO fileDetails;
+
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Getter
 	@Setter
-	public static class CategoryDTO{
-		
+	public static class FileDTO {
+
+		private Integer id;
+		private String originalFileName;
+		private String displayFileName;
+
+	}
+
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Getter
+	@Setter
+	public static class CategoryDTO {
+
 		private Integer id;
 		private String name;
 	}
