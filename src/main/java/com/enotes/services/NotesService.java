@@ -7,9 +7,8 @@ import com.enotes.dto.NotesDTO;
 
 public interface NotesService {
 
-	public boolean saveNotes(NotesDTO notesDTO);
+	public boolean saveNotes(NotesDTO notesDTO) throws Exception;
 	
 	public List<NotesDTO> getAllNotes();
-	
 	
 }

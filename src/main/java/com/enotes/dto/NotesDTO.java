@@ -4,6 +4,9 @@ import java.util.Date;
 
 import com.enotes.entity.Category;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +32,13 @@ public class NotesDTO {
 
 	private Date updatedOn;
 
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Getter
+	@Setter
+	public static class CategoryDTO{
+		
+		private Integer id;
+		private String name;
+	}
 }
