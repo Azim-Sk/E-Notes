@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.enotes.dto.NotesDTO;
 import com.enotes.services.NotesService;
 import com.enotes.utils.CommonUtils;
+
+import jakarta.servlet.annotation.MultipartConfig;
 
 @RestController
 @RequestMapping("/api/v1/notes")
@@ -24,8 +28,9 @@ public class NotesController {
 	private NotesService service;
 	
 	@PostMapping("/save")
-	public ResponseEntity<?> saveNotes(@RequestBody NotesDTO notesDTO) throws Exception{
-		boolean saveNotes = service.saveNotes(notesDTO);
+	public ResponseEntity<?> saveNotes(@RequestParam String notes, 
+			@RequestParam(required = false) MultipartFile file) throws Exception{
+		boolean saveNotes = service.saveNotes(notes,file);
 		
 		if(saveNotes) {
 			CommonUtils.createBuildResponseMessage("notes saved successfully !!!", HttpStatus.CREATED);
