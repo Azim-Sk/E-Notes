@@ -1,12 +1,13 @@
 package com.enotes.services.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
@@ -15,11 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.enotes.dto.NotesDTO;
 import com.enotes.dto.NotesDTO.CategoryDTO;
-import com.enotes.entity.Category;
 import com.enotes.entity.FileDetails;
 import com.enotes.entity.Notes;
 import com.enotes.exception.ResourceNotFound;
@@ -140,6 +141,21 @@ public class NotesServiceImpl implements NotesService {
 	public List<NotesDTO> getAllNotes() {
 		return repo.findAll().stream()
 		.map(n -> mapper.map(n, NotesDTO.class)).toList();
+	}
+
+
+	@Override
+	public FileDetails getFileDetails(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public byte[] downloadFile(FileDetails fileDtls) throws Exception {
+		InputStream io = new FileInputStream(fileDtls.getPath());
+		return StreamUtils.copyToByteArray(io);
+		
 	}
 
 }
