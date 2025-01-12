@@ -17,6 +17,7 @@ import com.enotes.dto.CategoryDTO;
 import com.enotes.dto.CategoryResponse;
 import com.enotes.exception.ResourceNotFound;
 import com.enotes.services.CategoryService;
+import com.enotes.utils.CommonUtils;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +35,12 @@ public class CategoryController {
 		Boolean saveCategory = service.saveCategory(categoryDto);
 
 		if (saveCategory) {
-			return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
+			return CommonUtils.createBuildResponseMessage("Saved Successfully", HttpStatus.CREATED);
+//			return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>("Category Not Saved", HttpStatus.INTERNAL_SERVER_ERROR);
+			return CommonUtils.createErrorResponseMessage("Category not Saved ", HttpStatus.INTERNAL_SERVER_ERROR);
+			// return new ResponseEntity<>("Category Not Saved",
+			// HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 	}
@@ -48,7 +52,8 @@ public class CategoryController {
 		if (CollectionUtils.isEmpty(allCategory)) {
 			return ResponseEntity.noContent().build();
 		} else {
-			return new ResponseEntity<>(allCategory, HttpStatus.OK);
+			return CommonUtils.createBuildResponse(allCategory, HttpStatus.OK);
+			// return new ResponseEntity<>(allCategory, HttpStatus.OK);
 		}
 	}
 
@@ -59,7 +64,8 @@ public class CategoryController {
 		if (CollectionUtils.isEmpty(allCategory)) {
 			return ResponseEntity.noContent().build();
 		} else {
-			return new ResponseEntity<>(allCategory, HttpStatus.OK);
+			return CommonUtils.createBuildResponse(allCategory, HttpStatus.OK);
+			// return new ResponseEntity<>(allCategory, HttpStatus.OK);
 		}
 	}
 
@@ -70,15 +76,17 @@ public class CategoryController {
 			CategoryDTO getById = service.getCategoryDetailsById(id);
 
 			if (ObjectUtils.isEmpty(getById)) {
-				return new ResponseEntity<>("Id not found : " + id, HttpStatus.NOT_FOUND);
+				return CommonUtils.createErrorResponseMessage("Id not found : " + id, HttpStatus.NOT_FOUND);
+				// return new ResponseEntity<>("Id not found : " + id, HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<>(getById, HttpStatus.OK);
-		} 
-		
+			return CommonUtils.createBuildResponse(getById, HttpStatus.OK);
+			// return new ResponseEntity<>(getById, HttpStatus.OK);
+		}
+
 		catch (ResourceNotFound e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		} 
-		
+		}
+
 		catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -90,9 +98,11 @@ public class CategoryController {
 		Boolean deleted = service.deleteCategoryDetailsById(id);
 
 		if (deleted) {
-			return new ResponseEntity<>("Category deleted successfully !!!", HttpStatus.OK);
+			return CommonUtils.createBuildResponse("Category deleted successfully !!!", HttpStatus.OK);
+			//return new ResponseEntity<>("Category deleted successfully !!!", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Category not deleted !!!", HttpStatus.INTERNAL_SERVER_ERROR);
+			return CommonUtils.createErrorResponseMessage("Category not deleted !!!", HttpStatus.INTERNAL_SERVER_ERROR);
+		//	return new ResponseEntity<>("Category not deleted !!!", HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 	}

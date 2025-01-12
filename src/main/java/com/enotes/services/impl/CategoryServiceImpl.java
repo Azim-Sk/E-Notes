@@ -31,28 +31,30 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Boolean saveCategory(CategoryDTO categoryDto) {
-		//Validation Checking
-		validation.categoryValidation(categoryDto);	
-		
-		//check existing category
-		
-		Boolean exist = repo.existByName(categoryDto.getName().trim());
-		
-		Category category = mapper.map(categoryDto, Category.class);
+	    // Validation Checking
+	    validation.categoryValidation(categoryDto);
 
-		if (ObjectUtils.isEmpty(category.getId())) {
-			category.setIsDeleted(false);
-			//category.setCreatedBy(1);
-			category.setCreatedOn(new Date());
-		} else {
-			updateCategory(category);
-		}
-		Category saveCategory = repo.save(category);
-		if (ObjectUtils.isEmpty(saveCategory)) {
-			return false;
-		}
-		return true;
+	    // Check if the category already exists
+	    Boolean exists = repo.existsByName(categoryDto.getName().trim()); // Updated method call
+
+	    if (exists) {
+	        throw new IllegalArgumentException("Category already exists");
+	    }
+
+	    // Map DTO to Entity
+	    Category category = mapper.map(categoryDto, Category.class);
+
+	    if (ObjectUtils.isEmpty(category.getId())) {
+	        category.setIsDeleted(false);
+	        category.setCreatedOn(new Date());
+	    } else {
+	        updateCategory(category);
+	    }
+
+	    Category savedCategory = repo.save(category);
+	    return !ObjectUtils.isEmpty(savedCategory);
 	}
+
 
 	private void updateCategory(Category category) {
 

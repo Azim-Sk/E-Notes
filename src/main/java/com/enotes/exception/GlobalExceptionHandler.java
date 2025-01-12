@@ -12,18 +12,23 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.enotes.utils.CommonUtils;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<?> handleNullPointerException(Exception e){
-		return new ResponseEntity<> (e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);	
+		return CommonUtils.createErrorResponseMessage(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	//	return new ResponseEntity<> (e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);	
 		
 	}
 	
 	@ExceptionHandler(ResourceNotFound.class)
 	public ResponseEntity<?> handleResourceNotFound(Exception e){
-		return new ResponseEntity<> (e.getMessage(), HttpStatus.NOT_FOUND);	
+		return CommonUtils.createErrorResponseMessage(e.getMessage(), HttpStatus.NOT_FOUND);
+
+	//	return new ResponseEntity<> (e.getMessage(), HttpStatus.NOT_FOUND);	
 		
 	}
 	
@@ -36,13 +41,18 @@ public class GlobalExceptionHandler {
 			String field = ((FieldError) (er)).getField();
 			error.put(field, msg);
 		});
-		return new ResponseEntity<> (error, HttpStatus.BAD_REQUEST);	
+		
+		return CommonUtils.createErrorResponse(error, HttpStatus.BAD_REQUEST);
+
+	//	return new ResponseEntity<> (error, HttpStatus.BAD_REQUEST);	
 		
 	}
 	
 	@ExceptionHandler(ValidationException.class)
 	public ResponseEntity<?> handleValidationException(ValidationException e){
-		return new ResponseEntity<> (e.getErrors(), HttpStatus.BAD_REQUEST);	
+		return CommonUtils.createErrorResponse(e.getErrors(), HttpStatus.BAD_REQUEST);
+
+//		return new ResponseEntity<> (e.getErrors(), HttpStatus.BAD_REQUEST);	
 		
 	}
 	

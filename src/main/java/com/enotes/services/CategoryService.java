@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.enotes.dto.CategoryDTO;
 import com.enotes.dto.CategoryResponse;
-import com.enotes.entity.Category;
 import com.enotes.exception.ResourceNotFound;
 
 public interface CategoryService {
